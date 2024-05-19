@@ -6,16 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="15dp"
+    android:padding="30dp"
     android:gravity="center"
     tools:context=".Register">
 
     <TextView
         android:text="@string/register"
-        android:textSize="50sp"
+        android:textSize="45sp"
         android:textStyle="bold"
         android:textColor="@color/purple"
         android:fontFamily="@font/nunitoblack"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="-20dp"/>
+
+    <TextView
+        android:id="@+id/alreadyRegistered"
+        android:text="@string/already_registered"
+        android:textSize="20sp"
+        android:textColor="@color/lightgrey"
+        android:fontFamily="@font/nunitoregular"
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
@@ -26,10 +38,22 @@
         android:layout_height="wrap_content" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/name"
+        android:hint="@string/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/email"
         android:hint="@string/email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="15dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -38,12 +62,14 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password" />
+        android:hint="@string/password"
+        android:padding="15dp"/>
 
     <Button
-        android:id="@+id/register_btn"
+        android:id="@+id/registerBtn"
         android:text="@string/register"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
