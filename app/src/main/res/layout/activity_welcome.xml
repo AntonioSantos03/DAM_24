@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/main_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:clickable="true"
+    android:onClick="onScreenClicked"
     android:gravity="center"
-    tools:context=".Welcome">
+    android:layout_gravity="center"
+    tools:context=".Welcome"
+    android:focusable="true">
 
-    <TextView
-        android:id="@+id/Welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunitoblack"
-        android:text="@string/welcome_to"
-        android:textSize="30sp"
-        android:textColor="@color/purple" />
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
-    <TextView
-        android:id="@+id/ConfConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunitoblack"
-        android:text="@string/confconnect"
-        android:textSize="50sp"
-        android:textColor="@color/purple"
-        android:paddingBottom="35dp" />
+        <TextView
+            android:id="@+id/Welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunitoblack"
+            android:text="@string/welcome_to"
+            android:textColor="@color/purple"
+            android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/sub_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/click_to_advance"
-        android:fontFamily="@font/nunitoregular"
-        android:textSize="24sp"
-        android:textColor="@color/lightgrey"
-        />
+        <TextView
+            android:id="@+id/ConfConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-20dp"
+            android:fontFamily="@font/nunitoblack"
+            android:paddingBottom="35dp"
+            android:text="@string/confconnect"
+            android:textColor="@color/purple"
+            android:textSize="55sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/sub_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunitoregular"
+            android:text="@string/click_to_advance"
+            android:textColor="@color/lightgrey"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+</FrameLayout>
