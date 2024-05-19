@@ -13,10 +13,10 @@
 
     <TextView
         android:text="@string/login"
-        android:textSize="40sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         android:textColor="@color/purple"
-        android:fontFamily="@font/"
+        android:fontFamily="@font/nunitoblack"
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"

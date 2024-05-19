@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Welcome">
+
+    <TextView
+        android:id="@+id/Welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunitoblack"
+        android:text="@string/welcome_to"
+        android:textSize="30sp"
+        android:textColor="@color/purple" />
+
+    <TextView
+        android:id="@+id/ConfConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunitoblack"
+        android:text="@string/confconnect"
+        android:textSize="50sp"
+        android:textColor="@color/purple"
+        android:paddingBottom="35dp" />
+
+    <TextView
+        android:id="@+id/sub_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/click_to_advance"
+        android:fontFamily="@font/nunitoregular"
+        android:textSize="24sp"
+        android:textColor="@color/lightgrey"
+        />
+
+</LinearLayout>

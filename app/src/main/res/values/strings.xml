@@ -5,4 +5,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
+    <string name="click_to_advance">Click to advance</string>
+    <string name="confconnect">ConfConnect</string>
+    <string name="welcome_to">Welcome to</string>
 </resources>
