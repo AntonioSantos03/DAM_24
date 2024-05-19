@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "400780627309",
+    "project_id": "confconnect-2d13b",
+    "storage_bucket": "confconnect-2d13b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400780627309:android:bf2d77ec6abe366a03de64",
+        "android_client_info": {
+          "package_name": "com.example.confconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkzQ6w4o4OhjLjGtRfZXRM1X2vfqD8_ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
