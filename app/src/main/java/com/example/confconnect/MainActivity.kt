@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
 
         }
-
         }
         replaceFragment(HomeFragment())
     }

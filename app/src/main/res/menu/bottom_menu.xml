@@ -14,7 +14,4 @@
         android:title="Profile"
         android:icon="@drawable/baseline_account_circle_24"/>
 
-
-
-
 </menu>
