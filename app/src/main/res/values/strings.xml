@@ -15,4 +15,5 @@
     <string name="profile">Profile</string>
     <string name="upcoming_events">Upcoming Events</string>
     <string name="log_out">Log out</string>
+    <string name="profile_background">Profile Background</string>
 </resources>
