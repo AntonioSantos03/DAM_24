@@ -23,7 +23,9 @@
             android:src="@drawable/baseline_brightness_1_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/profile_background"
+            />
 
         <TextView
             android:id="@+id/profile"
@@ -41,14 +43,17 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <ImageButton
             android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/log_out"
