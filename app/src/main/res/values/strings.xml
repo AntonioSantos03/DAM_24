@@ -16,4 +16,8 @@
     <string name="upcoming_events">Upcoming Events</string>
     <string name="log_out">Log out</string>
     <string name="profile_background">Profile Background</string>
+    <string name="article_tittle">Article Tittle</string>
+    <string name="author">Author</string>
+    <string name="date">Date</string>
+    <string name="article_description">Article Description</string>
 </resources>
