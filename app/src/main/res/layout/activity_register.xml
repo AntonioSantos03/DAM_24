@@ -9,6 +9,8 @@
     android:gravity="center"
     tools:context=".Register">
 
+
+
     <TextView
         android:text="@string/register"
         android:textSize="45sp"
