@@ -20,10 +20,16 @@ class ManageArticles : AppCompatActivity() {
             val intent = Intent(this, AddArticle::class.java)
             startActivity(intent)
         }
+
+        binding.btnBack.setOnClickListener {
+            // Go back to the previous screen
+            finish()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
 }

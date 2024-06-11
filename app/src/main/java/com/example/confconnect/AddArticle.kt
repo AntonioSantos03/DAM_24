@@ -19,11 +19,6 @@ class AddArticle : AppCompatActivity() {
         val date = binding.date.text.toString()
         val description = binding.description.text.toString()
 
-        if (title.isEmpty() || author.isEmpty() || date.isEmpty() || description.isEmpty()) {
-            Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         val articleId = database.push().key
         val article = Articles(articleId, title, author, date, description)
 
