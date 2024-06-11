@@ -1,19 +1,25 @@
-package com.example.confconnect.adapter
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confconnect.Articles
 import com.example.confconnect.databinding.RvArticlesBinding
 
+class RvArticlesAdapter(private val articlesList: ArrayList<Articles>) :
+    RecyclerView.Adapter<RvArticlesAdapter.ViewHolder>() {
 
-class RvArticlesAdapter(private val articlesList: java.util.ArrayList<Articles>) : RecyclerView.Adapter<RvArticlesAdapter.ViewHolder>() {
-    class ViewHolder(val binding: RvArticlesBinding) : RecyclerView.ViewHolder(binding.root) {
+    private var onItemClicked: (Articles) -> Unit = {}
 
-    }
+    inner class ViewHolder(val binding: RvArticlesBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(RvArticlesBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(
+            RvArticlesBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -24,11 +30,19 @@ class RvArticlesAdapter(private val articlesList: java.util.ArrayList<Articles>)
         val currentItem = articlesList[position]
         holder.apply {
             binding.apply {
-                binding.tvTitle.text = currentItem.title
-                binding.tvAuthor.text = currentItem.author
-                binding.tvDate.text = currentItem.date
-                binding.tvDescription.text = currentItem.description
+                tvTitle.text = currentItem.title
+                tvAuthor.text = currentItem.author
+                tvDate.text = currentItem.date
+                tvDescription.text = currentItem.description
+
+                root.setOnClickListener {
+                    onItemClicked(currentItem)
+                }
             }
         }
+    }
+
+    fun setOnItemClickListener(listener: (Articles) -> Unit) {
+        onItemClicked = listener
     }
 }
