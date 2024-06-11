@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <ImageView
             android:layout_width="1500dp"
             android:layout_height="775dp"
@@ -62,6 +61,18 @@
             android:src="@drawable/logout_svgrepo_com"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintTop_toBottomOf="@+id/profile" />
+
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginTop="100dp"
+
+
+            />
 
     </FrameLayout>
 

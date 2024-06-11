@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+
+    >
+
+    <TextView
+        android:id="@+id/AdminPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/nunitoblack"
+        android:lineSpacingExtra="-20dp"
+        android:text="@string/admin_page"
+        android:textColor="@color/purple"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/btnManageArticles"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="manageArticles"
+        android:text="@string/manage_articles"
+        android:fontFamily="@font/nunitoblack"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textAlignment="center"
+        />
+
+    <Button
+        android:id="@+id/btnManageSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="manageSchedule"
+        android:text="@string/manage_schedule"
+        android:fontFamily="@font/nunitoblack"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textAlignment="center"
+        />
+
+    <Button
+        android:id="@+id/btnManageProfiles"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="manageProfiles"
+        android:text="@string/manage_profiles"
+        android:fontFamily="@font/nunitoblack"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textAlignment="center" />
+
+    <ImageButton
+        android:id="@+id/logoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="112dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/log_out"
+        android:fontFamily="@font/nunitoregular"
+        android:padding="10dp"
+        android:src="@drawable/logout_svgrepo_com_purple"
+        app:layout_constraintDimensionRatio="1:1"
+
+        />
+
+</LinearLayout>

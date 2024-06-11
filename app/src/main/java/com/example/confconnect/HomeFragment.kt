@@ -12,26 +12,17 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.btnAdd.setOnClickListener(){
-            val fragment = AddArticleFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.add_main, fragment) //
-            transaction.addToBackStack(null)
-            transaction.commit()
-
-
-        }
-
         return binding.root
+    }
 
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

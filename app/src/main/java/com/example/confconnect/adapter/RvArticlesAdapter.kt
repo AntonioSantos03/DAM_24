@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.confconnect.Articles
 import com.example.confconnect.databinding.RvArticlesBinding
 
+
 class RvArticlesAdapter(private val articlesList: java.util.ArrayList<Articles>) : RecyclerView.Adapter<RvArticlesAdapter.ViewHolder>() {
     class ViewHolder(val binding: RvArticlesBinding) : RecyclerView.ViewHolder(binding.root) {
 

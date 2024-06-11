@@ -20,4 +20,13 @@
     <string name="author">Author</string>
     <string name="date">Date</string>
     <string name="article_description">Article Description</string>
+    <string name="description">Description</string>
+    <string name="adddate">Date</string>
+    <string name="add_article">Add Article</string>
+    <string name="todo">TODO</string>
+    <string name="title">Title</string>
+    <string name="manage_articles">Manage Articles</string>
+    <string name="manage_profiles">Manage Profiles</string>
+    <string name="manage_schedule">Manage Schedule</string>
+    <string name="admin_page">Admin Page</string>
 </resources>
