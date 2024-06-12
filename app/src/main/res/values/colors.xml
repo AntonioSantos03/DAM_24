@@ -5,5 +5,6 @@
     <color name="purple">#6562DF</color>
     <color name="lightpurple">#7775BD</color>
     <color name="lightgrey">#7E7E7E</color>
+    <color name="red">#FF0000</color>
 
 </resources>

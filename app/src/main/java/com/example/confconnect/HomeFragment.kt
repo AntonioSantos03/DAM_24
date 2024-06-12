@@ -57,11 +57,14 @@ class HomeFragment : Fragment() {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 articlesList.clear()
+                Log.d("HomeFragment", "Snapshot count: ${snapshot.childrenCount}")
                 for (dataSnapshot in snapshot.children) {
                     val article = dataSnapshot.getValue(Articles::class.java)
                     if (article != null) {
                         articlesList.add(article)
                         Log.d("HomeFragment", "Article added: ${article.title}")
+                    } else {
+                        Log.d("HomeFragment", "Article is null for snapshot: ${dataSnapshot.key}")
                     }
                 }
                 rvArticlesAdapter.notifyDataSetChanged()

@@ -33,7 +33,6 @@ class RvArticlesAdapter(private val articlesList: ArrayList<Articles>) :
                 tvTitle.text = currentItem.title
                 tvAuthor.text = currentItem.author
                 tvDate.text = currentItem.date
-                tvDescription.text = currentItem.description
 
                 root.setOnClickListener {
                     onItemClicked(currentItem)
