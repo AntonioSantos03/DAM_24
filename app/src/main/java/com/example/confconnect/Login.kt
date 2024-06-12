@@ -53,16 +53,22 @@ class Login : AppCompatActivity() {
     }
     override fun onStart() {
         super.onStart()
-        val email = binding.email.text.toString()
-         if (firebaseAuth.currentUser != null) {
-             if (email == "admin@admin.com") {
-                    val intent = Intent(this, AdminPage::class.java)
-                    startActivity(intent)
-                }
-                else {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            // User is signed in
+            val email = currentUser.email
+            if (email != null && email == "admin@admin.com") {
+                // Redirect to admin page
+                val intent = Intent(this, AdminPage::class.java)
+                startActivity(intent)
+                finish() // Finish the current activity to prevent going back
+            } else {
+                // Redirect to main activity
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish() // Finish the current activity to prevent going back
+            }
         }
     }
+
 }
