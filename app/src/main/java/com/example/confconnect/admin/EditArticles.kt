@@ -19,11 +19,13 @@ class EditArticles : AppCompatActivity() {
 
         // Get article data from intent
         article = Articles(
-            id = intent.getStringExtra("articleId") ?: "",
+            id = intent.getStringExtra("Id") ?: "",
             title = intent.getStringExtra("title") ?: "",
             author = intent.getStringExtra("author") ?: "",
             date = intent.getStringExtra("date") ?: "",
-            description = intent.getStringExtra("description") ?: ""
+            description = intent.getStringExtra("description") ?: "",
+            room = intent.getStringExtra("room") ?: ""
+
         )
 
         // Bind data to views
@@ -31,6 +33,7 @@ class EditArticles : AppCompatActivity() {
         binding.etAuthor.setText(article.author)
         binding.etDate.setText(article.date)
         binding.etDescription.setText(article.description)
+        binding.etRoom.setText(article.room)
 
         // Set up listeners for save and delete buttons
         binding.btnSave.setOnClickListener {
@@ -53,7 +56,8 @@ class EditArticles : AppCompatActivity() {
             title = binding.etTitle.text.toString(),
             author = binding.etAuthor.text.toString(),
             date = binding.etDate.text.toString(),
-            description = binding.etDescription.text.toString()
+            description = binding.etDescription.text.toString(),
+            room = binding.etRoom.text.toString()
         )
 
         article.id?.let {

@@ -27,7 +27,7 @@
         android:id="@+id/alreadyRegistered"
         android:text="@string/already_registered"
         android:textSize="20sp"
-        android:textColor="@color/lightgrey"
+        android:textColor="@color/lightgray"
         android:fontFamily="@font/nunitoregular"
         android:gravity="center"
         android:layout_marginBottom="20dp"

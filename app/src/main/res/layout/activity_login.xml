@@ -24,7 +24,7 @@
         android:id="@+id/notRegistered"
         android:text="@string/Sign_in_here"
         android:textSize="20sp"
-        android:textColor="@color/lightgrey"
+        android:textColor="@color/lightgray"
         android:fontFamily="@font/nunitoregular"
         android:gravity="center"
         android:layout_marginBottom="20dp"

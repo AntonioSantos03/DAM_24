@@ -25,7 +25,7 @@
         android:id="@+id/author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="text"
         android:hint="@string/author"
@@ -38,7 +38,7 @@
         android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="date"
         android:hint="Date (DD-MM-YYYY)"
@@ -51,7 +51,7 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="text"
         android:hint="@string/description"
@@ -59,6 +59,19 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <EditText
+        android:id="@+id/room"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Room Number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
 
     <Button
         android:id="@+id/addArticleButton"
@@ -68,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintTop_toBottomOf="@+id/room"
         app:layout_constraintVertical_bias="0.165"
         android:clickable="true"
         android:focusable="true" />

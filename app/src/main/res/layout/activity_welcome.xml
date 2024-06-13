@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunitoregular"
             android:text="@string/click_to_advance"
-            android:textColor="@color/lightgrey"
+            android:textColor="@color/lightgray"
             android:textSize="24sp" />
 
     </LinearLayout>

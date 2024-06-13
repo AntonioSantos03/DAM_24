@@ -3,11 +3,9 @@ package com.example.confconnect.admin
 import RvArticlesAdapter
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.confconnect.AddArticle
 import com.example.confconnect.Articles
 import com.example.confconnect.databinding.ActivityManageArticlesBinding
 import com.google.firebase.database.DataSnapshot
@@ -35,11 +33,12 @@ class ManageArticles : AppCompatActivity() {
 
         rvArticlesAdapter.setOnItemClickListener { article ->
             val intent = Intent(this, EditArticles::class.java).apply {
-                putExtra("articleId", article.id)
+                putExtra("Id", article.id)
                 putExtra("title", article.title)
                 putExtra("author", article.author)
                 putExtra("date", article.date)
                 putExtra("description", article.description)
+                putExtra("room", article.room)
             }
             startActivity(intent)
         }

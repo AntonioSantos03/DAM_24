@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
         rvArticlesAdapter.setOnItemClickListener { article ->
             val intent = Intent(activity, ArticleDetails::class.java).apply {
-                putExtra("articleId", article.id)
+                putExtra("Id", article.id)
                 putExtra("title", article.title)
                 putExtra("author", article.author)
                 putExtra("date", article.date)
