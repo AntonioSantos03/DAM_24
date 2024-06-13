@@ -33,7 +33,7 @@ class ManageArticles : AppCompatActivity() {
 
         rvArticlesAdapter.setOnItemClickListener { article ->
             val intent = Intent(this, EditArticles::class.java).apply {
-                putExtra("Id", article.id)
+                putExtra("Id", article.articleId)
                 putExtra("title", article.title)
                 putExtra("author", article.author)
                 putExtra("date", article.date)

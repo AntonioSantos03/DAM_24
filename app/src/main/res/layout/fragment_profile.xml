@@ -8,23 +8,24 @@
     android:background="@color/white"
     tools:context=".ProfileFragment">
 
+    <ImageView
+        android:layout_width="1500dp"
+        android:layout_height="775dp"
+        android:layout_gravity="top"
+        android:layout_marginStart="-550dp"
+        android:layout_marginTop="-230dp"
+        android:src="@drawable/baseline_brightness_1_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/profile_background"
+        />
+
+
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="1500dp"
-            android:layout_height="775dp"
-            android:layout_gravity="top"
-            android:layout_marginStart="-550dp"
-            android:layout_marginTop="-230dp"
-            android:src="@drawable/baseline_brightness_1_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/profile_background"
-            />
 
         <TextView
             android:id="@+id/profile"
@@ -63,16 +64,26 @@
             app:layout_constraintTop_toBottomOf="@+id/profile" />
 
         <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="100dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/nunitoregular"
+            android:padding="10dp" />
+
+        <TextView
             android:id="@+id/emailTextView"
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:layout_marginTop="100dp"
-
-
-            />
+            android:layout_marginTop="150dp" />
 
     </FrameLayout>
 

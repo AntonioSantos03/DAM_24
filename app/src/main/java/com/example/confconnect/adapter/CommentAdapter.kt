@@ -1,54 +1,49 @@
 package com.example.confconnect.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.confconnect.Comment
-import com.example.confconnect.databinding.ItemCommentBinding
+import com.example.confconnect.Comments
+import com.example.confconnect.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CommentAdapter(
-    private var comments: List<Comment>,
-    private val onItemClick: (Comment) -> Unit
+    private var comments: List<Comments>
 ) : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
 
-    inner class CommentViewHolder(private val binding: ItemCommentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            // Optionally, set up click listener here if needed
-            itemView.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClick(comments[position])
-                }
-            }
-        }
-
-        fun bind(comment: Comment) {
-            binding.apply {
-                tvCommentText.text = comment.commentText
-                tvUserName.text = comment.userName
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val binding = ItemCommentBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return CommentViewHolder(binding)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment, parent, false)
+        return CommentViewHolder(view)
     }
-
-    override fun getItemCount(): Int = comments.size
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        holder.bind(comments[position])
+        val comment = comments[position]
+        holder.bind(comment)
     }
 
-    fun updateComments(updatedComments: List<Comment>) {
-        comments = updatedComments
+    override fun getItemCount(): Int {
+        return comments.size
+    }
+
+    fun setComments(comments: List<Comments>) {
+        this.comments = comments
         notifyDataSetChanged()
+    }
+
+    class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val userNameTextView: TextView = itemView.findViewById(R.id.tvUserName)
+        private val commentTextView: TextView = itemView.findViewById(R.id.tvCommentText)
+        private val timestampTextView: TextView = itemView.findViewById(R.id.tvTimestamp)
+
+        fun bind(comment: Comments) {
+            userNameTextView.text = comment.userName
+            commentTextView.text = comment.commentText
+            val sdf = SimpleDateFormat("MMM dd, yyyy hh:mm:ss a", Locale.getDefault())
+            val formattedDate = sdf.format(Date(comment.timestamp ?: 0))
+            timestampTextView.text = formattedDate
+        }
     }
 }

@@ -19,7 +19,7 @@ class EditArticles : AppCompatActivity() {
 
         // Get article data from intent
         article = Articles(
-            id = intent.getStringExtra("Id") ?: "",
+            articleId = intent.getStringExtra("Id") ?: "",
             title = intent.getStringExtra("title") ?: "",
             author = intent.getStringExtra("author") ?: "",
             date = intent.getStringExtra("date") ?: "",
@@ -52,7 +52,7 @@ class EditArticles : AppCompatActivity() {
     private fun saveArticle() {
         val database = FirebaseDatabase.getInstance().getReference("Articles")
         val updatedArticle = Articles(
-            id = article.id,
+            articleId = article.articleId,
             title = binding.etTitle.text.toString(),
             author = binding.etAuthor.text.toString(),
             date = binding.etDate.text.toString(),
@@ -60,7 +60,7 @@ class EditArticles : AppCompatActivity() {
             room = binding.etRoom.text.toString()
         )
 
-        article.id?.let {
+        article.articleId?.let {
             database.child(it).setValue(updatedArticle)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Article updated successfully", Toast.LENGTH_SHORT).show()
@@ -74,7 +74,7 @@ class EditArticles : AppCompatActivity() {
 
     private fun deleteArticle() {
         val database = FirebaseDatabase.getInstance().getReference("Articles")
-        article.id?.let {
+        article.articleId?.let {
             database.child(it).removeValue()
                 .addOnSuccessListener {
                     Toast.makeText(this, "Article deleted successfully", Toast.LENGTH_SHORT).show()
