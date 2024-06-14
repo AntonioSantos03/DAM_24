@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    >
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/tvMap"
@@ -21,12 +20,12 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"/>
 
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        tools:context=".ShowMap" />
+        android:apiKey="@string/google_maps_key"
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
 </LinearLayout>
