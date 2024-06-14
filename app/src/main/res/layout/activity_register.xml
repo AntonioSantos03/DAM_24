@@ -23,16 +23,32 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="-20dp"/>
 
-    <TextView
-        android:id="@+id/alreadyRegistered"
-        android:text="@string/already_registered"
-        android:textSize="20sp"
-        android:textColor="@color/lightgray"
-        android:fontFamily="@font/nunitoregular"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"  />
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/already_registered"
+            android:textSize="20sp"
+            android:textColor="@color/lightgray"
+            android:fontFamily="@font/nunitoregular"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="100dp"  />
+
+        <TextView
+            android:id="@+id/alreadyRegistered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/nunitoregular"
+            android:gravity="center"
+            android:text="@string/Log_in_here"
+            android:textColor="@color/purple"
+            android:textSize="20sp"
+            android:paddingLeft="200dp"/>
+    </RelativeLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -59,12 +75,25 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/password"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:padding="15dp"/>
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:padding="15dp"/>
+        <ImageButton
+            android:id="@+id/togglePasswordVisibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="10dp"
+            android:src="@drawable/ic_eye_off_line"/>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/registerBtn"

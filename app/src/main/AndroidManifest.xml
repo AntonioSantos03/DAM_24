@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
+            android:name=".eye_password"
+            android:exported="false" />
+        <activity
             android:name=".UserDetails"
             android:exported="true" />
         <activity

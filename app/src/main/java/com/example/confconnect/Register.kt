@@ -2,6 +2,7 @@ package com.example.confconnect
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.confconnect.databinding.ActivityRegisterBinding
@@ -15,6 +16,7 @@ class Register : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var usersRef: DatabaseReference
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,10 @@ class Register : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         usersRef = database.reference.child("users")
+
+        // Set password input type to password
+        binding.password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+
 
         binding.alreadyRegistered.setOnClickListener {
             val intent = Intent(this, Login::class.java)
@@ -80,6 +86,18 @@ class Register : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.togglePasswordVisibility.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                binding.password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.togglePasswordVisibility.setImageResource(R.drawable.ic_eye_line) // eye open
+            } else {
+                binding.password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.togglePasswordVisibility.setImageResource(R.drawable.ic_eye_off_line) // eye close
+            }
+            binding.password.text?.let { it1 -> binding.password.setSelection(it1.length) }  // Move cursor to the end
         }
     }
 }

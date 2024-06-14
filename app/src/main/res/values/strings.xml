@@ -9,8 +9,10 @@
     <string name="confconnect">ConfConnect</string>
     <string name="welcome_to">Welcome to</string>
     <string name="name">Name</string>
-    <string name="already_registered">Already Registered? Log in here.</string>
-    <string name="Sign_in_here">Don’t have a account? Sign in here.</string>
+    <string name="already_registered">Already Registered?</string>
+    <string name="Log_in_here"><u>Log in here.</u></string>
+    <string name="is_Sign_in">Don’t have an account?</string>
+    <string name="Sign_in_here"><u>Sign in here.</u></string>
     <string name="articles">Articles</string>
     <string name="profile">Profile</string>
     <string name="upcoming_events">Upcoming Events</string>
