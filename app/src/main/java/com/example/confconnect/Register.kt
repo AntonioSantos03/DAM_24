@@ -49,6 +49,7 @@ class Register : AppCompatActivity() {
                                 val userData = HashMap<String, Any>()
                                 userData["email"] = email
                                 userData["name"] = name
+                                userData["id"] = userId
 
                                 usersRef.child(it).setValue(userData)
                                     .addOnSuccessListener {

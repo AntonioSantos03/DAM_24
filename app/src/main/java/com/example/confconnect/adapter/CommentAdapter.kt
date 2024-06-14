@@ -33,6 +33,11 @@ class CommentAdapter(
         notifyDataSetChanged()
     }
 
+    fun clearComments() {
+        this.comments = emptyList()
+        notifyDataSetChanged()
+    }
+
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val userNameTextView: TextView = itemView.findViewById(R.id.tvUserName)
         private val commentTextView: TextView = itemView.findViewById(R.id.tvCommentText)

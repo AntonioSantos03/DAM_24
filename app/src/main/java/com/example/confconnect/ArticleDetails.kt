@@ -68,75 +68,30 @@ class ArticleDetails : AppCompatActivity() {
             val currentUser = FirebaseAuth.getInstance().currentUser
 
             currentUser?.let { user ->
-                // Assuming you have stored user details in Firebase Realtime Database under "users" node
+                // Retrieve user details from Firebase Database under "users" node
                 val usersRef = FirebaseDatabase.getInstance().getReference("users").child(user.uid)
 
-                // Retrieve user details from database
                 usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            // User details found in database
-                            val userId = snapshot.child("id").getValue(String::class.java) ?: ""
-                            val userName = snapshot.child("name").getValue(String::class.java) ?: "Anonymous" // Use default if not found
+                        val userId = user.uid
+                        val userName = snapshot.child("name").getValue(String::class.java) ?: "Anonymous" // Default to "Anonymous" if name not found
 
-                            // Create comment object
-                            val timestamp = System.currentTimeMillis()
-                            val commentId = commentsRef.push().key ?: ""
+                        // Create comment object
+                        val timestamp = System.currentTimeMillis()
+                        val commentId = commentsRef.push().key ?: ""
 
-                            val comment = Comments(commentId, articleId, userId, userName, commentText, timestamp)
+                        val comment = Comments(commentId, articleId, userId, userName, commentText, timestamp)
 
-                            // Save comment to Realtime Database
-                            commentsRef.child(commentId).setValue(comment)
-                                .addOnSuccessListener {
-                                    val articleComment = mapOf(
-                                        "articleId" to articleId,
-                                        "commentId" to commentId
-                                    )
-                                    database.getReference("article_comments").child(commentId).setValue(articleComment)
-                                        .addOnSuccessListener {
-                                            Toast.makeText(this@ArticleDetails, "Comment added successfully", Toast.LENGTH_SHORT).show()
-                                            binding.etComment.text.clear()
-                                            loadComments()
-                                        }
-                                        .addOnFailureListener { e ->
-                                            Toast.makeText(this@ArticleDetails, "Failed to add article_comment: ${e.message}", Toast.LENGTH_SHORT).show()
-                                        }
-                                }
-                                .addOnFailureListener { e ->
-                                    Toast.makeText(this@ArticleDetails, "Failed to add comment: ${e.message}", Toast.LENGTH_SHORT).show()
-                                }
-                        } else {
-                            // User details not found in database, fallback to Firebase Authentication details
-                            val userId = user.uid
-                            val userName = user.displayName ?: "Anonymous" // Use displayName if available, otherwise default to "Anonymous"
-
-                            // Create comment object
-                            val timestamp = System.currentTimeMillis()
-                            val commentId = commentsRef.push().key ?: ""
-
-                            val comment = Comments(commentId, articleId, userId, userName, commentText, timestamp)
-
-                            // Save comment to Realtime Database
-                            commentsRef.child(commentId).setValue(comment)
-                                .addOnSuccessListener {
-                                    val articleComment = mapOf(
-                                        "articleId" to articleId,
-                                        "commentId" to commentId
-                                    )
-                                    database.getReference("article_comments").child(commentId).setValue(articleComment)
-                                        .addOnSuccessListener {
-                                            Toast.makeText(this@ArticleDetails, "Comment added successfully", Toast.LENGTH_SHORT).show()
-                                            binding.etComment.text.clear()
-                                            loadComments()
-                                        }
-                                        .addOnFailureListener { e ->
-                                            Toast.makeText(this@ArticleDetails, "Failed to add article_comment: ${e.message}", Toast.LENGTH_SHORT).show()
-                                        }
-                                }
-                                .addOnFailureListener { e ->
-                                    Toast.makeText(this@ArticleDetails, "Failed to add comment: ${e.message}", Toast.LENGTH_SHORT).show()
-                                }
-                        }
+                        // Save comment to Realtime Database
+                        commentsRef.child(commentId).setValue(comment)
+                            .addOnSuccessListener {
+                                Toast.makeText(this@ArticleDetails, "Comment added successfully", Toast.LENGTH_SHORT).show()
+                                binding.etComment.text.clear()
+                                loadComments() // Reload comments after adding new comment
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this@ArticleDetails, "Failed to add comment: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -149,34 +104,17 @@ class ArticleDetails : AppCompatActivity() {
         }
     }
 
-
     private fun loadComments() {
         if (articleId.isNotEmpty()) {
-            database.getReference("article_comments")
-                .orderByChild("articleId")
-                .equalTo(articleId)
+            commentsRef.orderByChild("articleId").equalTo(articleId)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val comments = mutableListOf<Comments>()
-                        if (snapshot.exists()) {
-                            val commentIds = snapshot.children.mapNotNull { it.child("commentId").getValue(String::class.java) }
-                            commentIds.forEach { commentId ->
-                                database.getReference("comments").child(commentId)
-                                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                                        override fun onDataChange(commentSnapshot: DataSnapshot) {
-                                            val comment = commentSnapshot.getValue(Comments::class.java)
-                                            comment?.let { comments.add(it) }
-                                            commentAdapter.setComments(comments)
-                                        }
-
-                                        override fun onCancelled(error: DatabaseError) {
-                                            Toast.makeText(this@ArticleDetails, "Failed to fetch comment: ${error.message}", Toast.LENGTH_SHORT).show()
-                                        }
-                                    })
-                            }
-                        } else {
-                            commentAdapter.setComments(emptyList())
+                        for (commentSnapshot in snapshot.children) {
+                            val comment = commentSnapshot.getValue(Comments::class.java)
+                            comment?.let { comments.add(it) }
                         }
+                        commentAdapter.setComments(comments)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
