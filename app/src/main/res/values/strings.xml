@@ -29,4 +29,5 @@
     <string name="manage_profiles">Manage Profiles</string>
     <string name="manage_schedule">Manage Schedule</string>
     <string name="admin_page">Admin Page</string>
+    <string name="manage_questions">Manage Questions</string>
 </resources>

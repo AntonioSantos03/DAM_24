@@ -22,6 +22,7 @@ class AdminPage : AppCompatActivity() {
         val manageArticlesBtn = findViewById<Button>(R.id.btnManageArticles)
         val manageScheduleBtn = findViewById<Button>(R.id.btnManageSchedule)
         val manageProfilesBtn = findViewById<Button>(R.id.btnManageProfiles)
+        val manageCommentsBtn = findViewById<Button>(R.id.btnManageComments)
         val logoutBtn = findViewById<ImageButton>(R.id.logoutBtn)
 
         logoutBtn.setOnClickListener {
@@ -44,5 +45,10 @@ class AdminPage : AppCompatActivity() {
         manageProfilesBtn.setOnClickListener {
             startActivity(Intent(this, ManageProfiles::class.java))
         }
+
+        manageCommentsBtn.setOnClickListener {
+            startActivity(Intent(this, ManageComments::class.java))
+        }
+
     }
 }

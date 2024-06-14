@@ -112,7 +112,11 @@ class ArticleDetails : AppCompatActivity() {
                         val comments = mutableListOf<Comments>()
                         for (commentSnapshot in snapshot.children) {
                             val comment = commentSnapshot.getValue(Comments::class.java)
-                            comment?.let { comments.add(it) }
+                            comment?.let {
+                                if (it.approved == true) { // Filter approved comments
+                                    comments.add(it)
+                                }
+                            }
                         }
                         commentAdapter.setComments(comments)
                     }
@@ -125,6 +129,7 @@ class ArticleDetails : AppCompatActivity() {
             Toast.makeText(this, "Invalid article ID", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
