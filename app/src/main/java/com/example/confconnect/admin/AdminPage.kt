@@ -8,9 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.confconnect.Login
 import com.example.confconnect.R
-import com.example.confconnect.admin.ManageArticles
-import com.example.confconnect.admin.ManageProfiles
-import com.example.confconnect.admin.ManageSchedule
 import com.google.firebase.auth.FirebaseAuth
 
 class AdminPage : AppCompatActivity() {
@@ -23,6 +20,7 @@ class AdminPage : AppCompatActivity() {
         val manageScheduleBtn = findViewById<Button>(R.id.btnManageSchedule)
         val manageProfilesBtn = findViewById<Button>(R.id.btnManageProfiles)
         val manageCommentsBtn = findViewById<Button>(R.id.btnManageComments)
+        val manageLocationBtn = findViewById<Button>(R.id.btnManageLocation)
         val logoutBtn = findViewById<ImageButton>(R.id.logoutBtn)
 
         logoutBtn.setOnClickListener {
@@ -50,5 +48,8 @@ class AdminPage : AppCompatActivity() {
             startActivity(Intent(this, ManageComments::class.java))
         }
 
+        manageLocationBtn.setOnClickListener {
+            startActivity(Intent(this, ManageLocation::class.java))
+        }
     }
 }

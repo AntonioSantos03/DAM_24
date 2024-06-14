@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.confconnect.ArticleDetails
 import com.example.confconnect.Articles
+import com.example.confconnect.ShowMap
 import com.example.confconnect.databinding.FragmentHomeBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -46,6 +47,11 @@ class HomeFragment : Fragment() {
                 putExtra("date", article.date)
                 putExtra("description", article.description)
             }
+            startActivity(intent)
+        }
+
+        binding.btnOpenMapActivity.setOnClickListener {
+            val intent = Intent(activity, ShowMap::class.java)
             startActivity(intent)
         }
 

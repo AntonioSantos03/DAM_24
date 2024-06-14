@@ -7,11 +7,10 @@
 
     <TextView
         android:id="@+id/articles"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:fontFamily="@font/nunitoblack"
         android:gravity="center"
         android:lineSpacingExtra="-20dp"
@@ -19,22 +18,32 @@
         android:textColor="@color/purple"
         android:textSize="45sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnOpenMapActivity"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnOpenMapActivity"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/map_location_pin_svgrepo_com"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvArticles"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:clipToPadding="false"
         android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/articles"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation" />
+        app:layout_constraintTop_toBottomOf="@+id/articles" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
