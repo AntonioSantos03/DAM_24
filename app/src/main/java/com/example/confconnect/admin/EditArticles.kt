@@ -1,9 +1,11 @@
 package com.example.confconnect.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.confconnect.Articles
+import com.example.confconnect.ArticleDetails
 import com.example.confconnect.databinding.ActivityEditArticlesBinding
 import com.google.firebase.database.FirebaseDatabase
 
@@ -25,7 +27,6 @@ class EditArticles : AppCompatActivity() {
             date = intent.getStringExtra("date") ?: "",
             description = intent.getStringExtra("description") ?: "",
             room = intent.getStringExtra("room") ?: ""
-
         )
 
         // Bind data to views
@@ -35,7 +36,11 @@ class EditArticles : AppCompatActivity() {
         binding.etDescription.setText(article.description)
         binding.etRoom.setText(article.room)
 
-        // Set up listeners for save and delete buttons
+        // Set up listeners for save and delete button
+        binding.btnPreview.setOnClickListener {
+            previewArticle()
+        }
+
         binding.btnSave.setOnClickListener {
             saveArticle()
         }
@@ -47,6 +52,18 @@ class EditArticles : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+    }
+
+    private fun previewArticle() {
+        val intent = Intent(this, ArticleDetails::class.java).apply {
+            putExtra("articleId", article.articleId)
+            putExtra("title", article.title)
+            putExtra("author", article.author)
+            putExtra("date", article.date)
+            putExtra("description", article.description)
+            putExtra("room", article.room)
+        }
+        startActivity(intent)
     }
 
     private fun saveArticle() {
@@ -85,6 +102,4 @@ class EditArticles : AppCompatActivity() {
                 }
         }
     }
-
-
 }

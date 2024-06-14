@@ -30,6 +30,7 @@ class ArticleDetails : AppCompatActivity() {
         val author = intent.getStringExtra("author")
         val date = intent.getStringExtra("date")
         val description = intent.getStringExtra("description")
+        val room = intent.getStringExtra("room")
         articleId = intent.getStringExtra("articleId") ?: ""
 
         // Display article details
@@ -37,6 +38,7 @@ class ArticleDetails : AppCompatActivity() {
         binding.tvAuthor.text = author
         binding.tvDate.text = date
         binding.tvDescription.text = description
+        binding.tvRoom.text = room
 
         // Set up RecyclerView for comments
         binding.rvComments.layoutManager = LinearLayoutManager(this)
@@ -112,7 +114,11 @@ class ArticleDetails : AppCompatActivity() {
                         val comments = mutableListOf<Comments>()
                         for (commentSnapshot in snapshot.children) {
                             val comment = commentSnapshot.getValue(Comments::class.java)
-                            comment?.let { comments.add(it) }
+                            comment?.let {
+                                if (it.approved == true) { // Filter approved comments
+                                    comments.add(it)
+                                }
+                            }
                         }
                         commentAdapter.setComments(comments)
                     }
@@ -125,6 +131,7 @@ class ArticleDetails : AppCompatActivity() {
             Toast.makeText(this, "Invalid article ID", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
