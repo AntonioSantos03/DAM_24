@@ -1,34 +1,33 @@
 package com.example.confconnect.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confconnect.Comments
-import com.example.confconnect.R
+import com.example.confconnect.databinding.ItemPendingCommentBinding
+import com.google.firebase.database.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class PendingCommentsAdapter(
-    private var comments: List<Comments>
-) : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
+    private var comments: List<Comments>,
+    private val onApproveClick: (Comments) -> Unit,
+    private val onRejectClick: (Comments) -> Unit
+) : RecyclerView.Adapter<PendingCommentsAdapter.CommentViewHolder>() {
+
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val articlesRef: DatabaseReference = database.getReference("Articles")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment, parent, false)
-        return CommentViewHolder(view)
+        val binding = ItemPendingCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CommentViewHolder(binding, onApproveClick, onRejectClick, articlesRef)
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        val comment = comments[position]
-        holder.bind(comment)
-        holder.bindApprovalButton(comment)
+        holder.bind(comments[position])
     }
 
-    override fun getItemCount(): Int {
-        return comments.size
-    }
+    override fun getItemCount(): Int = comments.size
 
     fun setComments(comments: List<Comments>) {
         this.comments = comments
@@ -40,28 +39,37 @@ class PendingCommentsAdapter(
         notifyDataSetChanged()
     }
 
-    class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val userNameTextView: TextView = itemView.findViewById(R.id.tvUserName)
-        private val commentTextView: TextView = itemView.findViewById(R.id.tvCommentText)
-        private val timestampTextView: TextView = itemView.findViewById(R.id.tvTimestamp)
-        private val approveButton: Button = itemView.findViewById(R.id.btnApprove) // Assuming you have an approve button
+    class CommentViewHolder(
+        private val binding: ItemPendingCommentBinding,
+        private val onApproveClick: (Comments) -> Unit,
+        private val onRejectClick: (Comments) -> Unit,
+        private val articlesRef: DatabaseReference
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(comment: Comments) {
-            userNameTextView.text = comment.userName
-            commentTextView.text = comment.commentText
-            val sdf = SimpleDateFormat("MMM dd, yyyy hh:mm:ss a", Locale.getDefault())
-            val formattedDate = sdf.format(Date(comment.timestamp ?: 0))
-            timestampTextView.text = formattedDate
-            // Update button visibility or behavior based on approved status if needed
-            approveButton.visibility = if (comment.approved) View.GONE else View.VISIBLE
-        }
+            binding.tvUserName.text = comment.userName
+            binding.tvComment.text = comment.commentText
+            binding.tvTimestamp.text = SimpleDateFormat("MMM dd, yyyy hh:mm:ss a", Locale.getDefault())
+                .format(java.util.Date(comment.timestamp ?: 0))
 
-        fun bindApprovalButton(comment: Comments) {
-            approveButton.setOnClickListener {
-                // Toggle the approved status
-                comment.approved = true
-                // Notify adapter that data set changed
-                notifyDataSetChanged() // Alternatively, you can use notifyItemChanged(adapterPosition) for better performance
+            // Fetch the article title from the database
+            articlesRef.child(comment.articleId ?: "").child("title").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val title = snapshot.getValue(String::class.java)
+                    binding.tvArticleTitle.text = title ?: "Unknown Title"
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    binding.tvArticleTitle.text = "Error loading title"
+                }
+            })
+
+            binding.btnApprove.setOnClickListener {
+                onApproveClick(comment)
+            }
+
+            binding.btnReject.setOnClickListener {
+                onRejectClick(comment)
             }
         }
     }

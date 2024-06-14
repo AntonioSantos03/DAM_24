@@ -7,5 +7,5 @@ data class Comments(
     val userName: String? = "",
     val commentText: String? = "",
     val timestamp: Long? = null,
-    val approved: Boolean? = false
+    var approved: Boolean? = false
 )

@@ -1,6 +1,7 @@
 package com.example.confconnect.admin
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,10 +26,14 @@ class ManageComments : AppCompatActivity() {
         commentsRef = database.getReference("comments")
 
         binding.rvPendingComments.layoutManager = LinearLayoutManager(this)
-        pendingCommentsAdapter = PendingCommentsAdapter(emptyList(), ::onApproveComment)
+        pendingCommentsAdapter = PendingCommentsAdapter(emptyList(), this::onApproveComment, this::onRejectComment)
         binding.rvPendingComments.adapter = pendingCommentsAdapter
 
         loadPendingComments()
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun loadPendingComments() {
@@ -40,7 +45,9 @@ class ManageComments : AppCompatActivity() {
                         val comment = commentSnapshot.getValue(Comments::class.java)
                         comment?.let { pendingComments.add(it) }
                     }
-                    pendingCommentsAdapter.submitList(pendingComments)
+                    pendingCommentsAdapter.setComments(pendingComments)
+                    // Show or hide the no comments text based on the list size
+                    binding.tvNoComments.visibility = if (pendingComments.isEmpty()) View.VISIBLE else View.GONE
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -50,7 +57,6 @@ class ManageComments : AppCompatActivity() {
     }
 
     private fun onApproveComment(comment: Comments) {
-        // Update comment approval status to true
         commentsRef.child(comment.commentId ?: "").child("approved").setValue(true)
             .addOnSuccessListener {
                 Toast.makeText(this, "Comment approved successfully", Toast.LENGTH_SHORT).show()
@@ -58,6 +64,17 @@ class ManageComments : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed to approve comment: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun onRejectComment(comment: Comments) {
+        commentsRef.child(comment.commentId ?: "").removeValue()
+            .addOnSuccessListener {
+                Toast.makeText(this, "Comment rejected successfully", Toast.LENGTH_SHORT).show()
+                loadPendingComments() // Refresh the list after rejection
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to reject comment: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }

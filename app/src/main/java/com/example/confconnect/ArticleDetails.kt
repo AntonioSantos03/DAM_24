@@ -30,6 +30,7 @@ class ArticleDetails : AppCompatActivity() {
         val author = intent.getStringExtra("author")
         val date = intent.getStringExtra("date")
         val description = intent.getStringExtra("description")
+        val room = intent.getStringExtra("room")
         articleId = intent.getStringExtra("articleId") ?: ""
 
         // Display article details
@@ -37,6 +38,7 @@ class ArticleDetails : AppCompatActivity() {
         binding.tvAuthor.text = author
         binding.tvDate.text = date
         binding.tvDescription.text = description
+        binding.tvRoom.text = room
 
         // Set up RecyclerView for comments
         binding.rvComments.layoutManager = LinearLayoutManager(this)

@@ -39,6 +39,17 @@
             android:lineSpacingExtra="-10sp"
             android:fontFamily="@font/nunitoblack"/>
 
+        <TextView
+            android:id="@+id/tvAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:gravity="start"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,16 +78,6 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvAuthor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:textSize="18sp"
-            android:textColor="@color/lightgray"
-            android:gravity="start"/>
 
         <TextView
             android:id="@+id/tvDescription"
