@@ -1,9 +1,13 @@
+package com.example.confconnect
+
+import com.example.confconnect.adapters.RvArticlesAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,6 +59,19 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        // Set up search view
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { searchArticles(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { searchArticles(it) }
+                return true
+            }
+        })
+
         fetchArticlesData()
     }
 
@@ -81,5 +98,14 @@ class HomeFragment : Fragment() {
                 Toast.makeText(context, "Failed to load articles", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun searchArticles(query: String) {
+        val filteredList = articlesList.filter {
+            (it.title?.contains(query, true) ?: false) ||
+                    (it.author?.contains(query, true) ?: false) ||
+                    (it.description?.contains(query, true) ?: false)
+        }
+        rvArticlesAdapter.updateList(ArrayList(filteredList))
     }
 }

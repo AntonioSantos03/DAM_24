@@ -1,10 +1,12 @@
+package com.example.confconnect.adapters
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confconnect.Articles
 import com.example.confconnect.databinding.RvArticlesBinding
 
-class RvArticlesAdapter(private val articlesList: ArrayList<Articles>) :
+class RvArticlesAdapter(private var articlesList: ArrayList<Articles>) :
     RecyclerView.Adapter<RvArticlesAdapter.ViewHolder>() {
 
     private var onItemClicked: (Articles) -> Unit = {}
@@ -43,5 +45,10 @@ class RvArticlesAdapter(private val articlesList: ArrayList<Articles>) :
 
     fun setOnItemClickListener(listener: (Articles) -> Unit) {
         onItemClicked = listener
+    }
+
+    fun updateList(newList: ArrayList<Articles>) {
+        articlesList = newList
+        notifyDataSetChanged()
     }
 }
