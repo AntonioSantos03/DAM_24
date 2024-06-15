@@ -50,12 +50,29 @@
         android:hint="Description"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/etRoom"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Room Number"
-        android:textSize="16sp" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etRoom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Room Number"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Time"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btnPreview"

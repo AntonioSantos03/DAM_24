@@ -34,4 +34,5 @@
     <string name="manage_questions">Manage Questions</string>
     <string name="change_location">Change Location</string>
     <string name="google_maps_key">AIzaSyBdyAKNp4kCtFmbIWLp9_FmoCkfv87jHDk</string>
+    <string name="settings_button">Settings Button</string>
 </resources>

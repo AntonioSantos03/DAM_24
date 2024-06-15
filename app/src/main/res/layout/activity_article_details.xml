@@ -43,7 +43,6 @@
             android:id="@+id/tvAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:textSize="22sp"
@@ -55,14 +54,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginEnd="30dp">
 
             <TextView
                 android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:textSize="18sp"
                 android:textColor="@color/lightgray"
                 android:gravity="start"/>
@@ -71,11 +69,21 @@
                 android:id="@+id/tvRoom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:gravity="start"
+                android:layout_marginStart="16dp"
+                android:textSize="18sp"
                 android:textColor="@color/lightgray"
-                android:textSize="18sp" />
+                android:gravity="start" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@color/lightgray"
+                android:gravity="start"/>
+
         </LinearLayout>
 
 
@@ -83,7 +91,7 @@
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:textSize="16sp"
@@ -94,7 +102,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
@@ -117,20 +125,31 @@
                     android:fontFamily="@font/nunitoblack"
                     android:layout_marginBottom="8dp"/>
 
-                <EditText
-                    android:id="@+id/etComment"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter your question..."
-                    android:layout_marginBottom="8dp"/>
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
-                <Button
-                    android:id="@+id/btnSubmitComment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Submit"
-                    android:layout_gravity="end"
-                    android:layout_marginBottom="8dp"/>
+                    <EditText
+                        android:id="@+id/etComment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Enter your question..."
+                        android:layout_marginEnd="8dp" />
+
+                    <Button
+                        android:id="@+id/btnSubmitComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"
+                        android:layout_gravity="end"
+                        android:backgroundTint="@color/purple"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvComments"

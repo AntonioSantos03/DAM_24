@@ -46,6 +46,8 @@ class HomeFragment : Fragment() {
                 putExtra("author", article.author)
                 putExtra("date", article.date)
                 putExtra("description", article.description)
+                putExtra("room", article.room)
+                putExtra("time", article.time)
             }
             startActivity(intent)
         }

@@ -37,6 +37,7 @@ class ManageArticles : AppCompatActivity() {
                 putExtra("title", article.title)
                 putExtra("author", article.author)
                 putExtra("date", article.date)
+                putExtra("time", article.time)
                 putExtra("description", article.description)
                 putExtra("room", article.room)
             }

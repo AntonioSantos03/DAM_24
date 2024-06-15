@@ -1,15 +1,18 @@
 package com.example.confconnect.admin
 
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.confconnect.Articles
 import com.example.confconnect.ArticleDetails
+import com.example.confconnect.Articles
 import com.example.confconnect.databinding.ActivityEditArticlesBinding
 import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
-class EditArticles : AppCompatActivity() {
+class EditArticles : AppCompatActivity(), TimePickerDialog.OnTimeSetListener {
 
     private lateinit var binding: ActivityEditArticlesBinding
     private lateinit var article: Articles
@@ -25,14 +28,16 @@ class EditArticles : AppCompatActivity() {
             title = intent.getStringExtra("title") ?: "",
             author = intent.getStringExtra("author") ?: "",
             date = intent.getStringExtra("date") ?: "",
+            time = intent.getStringExtra("time") ?: "",
             description = intent.getStringExtra("description") ?: "",
-            room = intent.getStringExtra("room") ?: ""
+            room = intent.getStringExtra("room") ?: "",
         )
 
         // Bind data to views
         binding.etTitle.setText(article.title)
         binding.etAuthor.setText(article.author)
         binding.etDate.setText(article.date)
+        binding.etTime.setText(article.time) // Set the time EditText with the retrieved time
         binding.etDescription.setText(article.description)
         binding.etRoom.setText(article.room)
 
@@ -52,6 +57,29 @@ class EditArticles : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+
+        // Set click listener for time EditText to show TimePicker dialog
+        binding.etTime.setOnClickListener {
+            showTimePicker()
+        }
+    }
+
+    // Method to show TimePicker dialog
+    private fun showTimePicker() {
+        val currentTime = Calendar.getInstance()
+        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+        val minute = currentTime.get(Calendar.MINUTE)
+
+        TimePickerDialog(this, this, hour, minute, true).show()
+    }
+
+    // Callback method when a time is set in TimePicker
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        // Format the selected time as needed (e.g., convert to AM/PM format)
+        val formattedTime = String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute)
+
+        // Set the selected time to the EditText
+        binding.etTime.setText(formattedTime)
     }
 
     private fun previewArticle() {
@@ -62,6 +90,7 @@ class EditArticles : AppCompatActivity() {
             putExtra("date", article.date)
             putExtra("description", article.description)
             putExtra("room", article.room)
+            putExtra("time", article.time)
         }
         startActivity(intent)
     }
@@ -74,7 +103,8 @@ class EditArticles : AppCompatActivity() {
             author = binding.etAuthor.text.toString(),
             date = binding.etDate.text.toString(),
             description = binding.etDescription.text.toString(),
-            room = binding.etRoom.text.toString()
+            room = binding.etRoom.text.toString(),
+            time = binding.etTime.text.toString()
         )
 
         article.articleId?.let {

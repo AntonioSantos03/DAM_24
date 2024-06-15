@@ -1,42 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ProfileFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="1500dp"
-        android:layout_height="775dp"
-        android:layout_gravity="top"
-        android:layout_marginStart="-550dp"
-        android:layout_marginTop="-230dp"
-        android:src="@drawable/baseline_brightness_1_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/profile_background"
-        />
-
-
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <!-- Main content view -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ProfileFragment">
 
+        <!-- Your existing views here -->
+
+        <ImageView
+            android:layout_width="1500dp"
+            android:layout_height="775dp"
+            android:layout_gravity="top"
+            android:layout_marginStart="-550dp"
+            android:layout_marginTop="-230dp"
+            android:contentDescription="@string/profile_background"
+            android:src="@drawable/baseline_brightness_1_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/profile"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginBottom="10dp"
             android:fontFamily="@font/nunitoblack"
             android:gravity="center"
-            android:lineSpacingExtra="-20dp"
-            android:paddingTop="10dp"
             android:text="@string/profile"
             android:textColor="@color/white"
             android:textSize="45sp"
@@ -44,61 +41,152 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginTop="16dp" />
 
+        <!-- Logout ImageButton -->
         <ImageButton
-            android:id="@+id/logoutBtn"
+            android:id="@+id/settingsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginStart="20dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/log_out"
-            android:fontFamily="@font/nunitoregular"
-            android:padding="10dp"
-            android:src="@drawable/logout_svgrepo_com"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toBottomOf="@+id/profile" />
+            android:contentDescription="@string/settings_button"
+            android:src="@drawable/settings_svgrepo_com"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile"
+            app:layout_constraintTop_toTopOf="@+id/profile" />
 
+        <!-- Name TextView -->
         <TextView
             android:id="@+id/nameTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:fontFamily="@font/nunitoregular"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:layout_marginTop="100dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/nunitoregular"
-            android:padding="10dp" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile"
+            android:layout_marginTop="16dp" />
 
+        <!-- Email TextView -->
         <TextView
             android:id="@+id/emailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunitoregular"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+            android:layout_marginTop="8dp" />
+
+        <!-- User Comments Label -->
+        <TextView
+            android:id="@+id/tvUserCommentsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Questions:"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailTextView"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="15dp" />
+
+        <!-- RecyclerView for User Comments -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvUserComments"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserCommentsLabel"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_background"
+            android:padding="10dp" />
+
+        <!-- TextView for no comments message -->
+        <TextView
+            android:id="@+id/tvNoCommentsMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No questions found"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserCommentsLabel"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Bottom Navigation View -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:background="@color/purple"
+            app:itemActiveIndicatorStyle="@style/App.custom.Indicator"
+            app:itemIconSize="30dp"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_menu" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Sidebar View -->
+    <LinearLayout
+        android:id="@+id/nav_view"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <!-- Sidebar items -->
+        <TextView
+            android:id="@+id/nav_edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Edit Profile"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:layout_marginTop="150dp" />
+            android:onClick="onEditProfileClicked" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/nav_log_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Log Out"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:onClick="onLogOutClicked" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple"
-        app:itemActiveIndicatorStyle="@style/App.custom.Indicator"
-        app:itemIconSize="30dp"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu" />
+        <TextView
+            android:id="@+id/nav_delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Delete Account"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:onClick="onDeleteAccountClicked" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
