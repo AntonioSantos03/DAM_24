@@ -10,6 +10,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 
@@ -37,6 +38,12 @@ class ShowMap : AppCompatActivity(), OnMapReadyCallback {
         mapView = findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        val btnBack: FloatingActionButton = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish()
+        }
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -98,6 +105,7 @@ class ShowMap : AppCompatActivity(), OnMapReadyCallback {
                     Toast.makeText(this@ShowMap, "Location not found", Toast.LENGTH_SHORT).show()
                 }
             }
+
     }
 
     override fun onResume() {

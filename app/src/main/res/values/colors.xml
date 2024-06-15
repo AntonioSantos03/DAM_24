@@ -6,5 +6,6 @@
     <color name="lightpurple">#7775BD</color>
     <color name="lightgray">#7E7E7E</color>
     <color name="red">#FF0000</color>
+    <color name="transparent_black">#80000000</color>
 
 </resources>
