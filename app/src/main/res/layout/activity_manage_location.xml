@@ -18,7 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
-            android:padding="9dp"
             android:src="@drawable/baseline_arrow_back_ios_24"
             android:contentDescription="@string/todo"
             android:focusable="true"

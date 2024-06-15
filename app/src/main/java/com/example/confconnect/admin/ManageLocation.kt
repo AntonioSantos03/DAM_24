@@ -65,19 +65,14 @@ class ManageLocation : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Set a click listener for the map
         mMap.setOnMapClickListener { latLng ->
-            // Clear previous markers
             mMap.clear()
 
-            // Place a marker at the clicked location
             mMap.addMarker(MarkerOptions().position(latLng).title("Selected Location"))
 
-            // Save the selected location
             selectedLocation = latLng
         }
 
-        // Load previously saved location if exists
         loadSavedLocation()
     }
 
@@ -108,7 +103,6 @@ class ManageLocation : AppCompatActivity(), OnMapReadyCallback {
                             Toast.makeText(this@ManageLocation, "Coordinates not found", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    // Only load the first location found
                     break
                 }
             }

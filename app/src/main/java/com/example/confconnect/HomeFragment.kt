@@ -12,11 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.confconnect.adapters.RvArticlesAdapter
 import com.example.confconnect.databinding.FragmentHomeBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.type.LatLng
 
 class HomeFragment : Fragment() {
@@ -65,7 +61,6 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnOpenMapActivity.setOnClickListener {
-            // Check if location data is available
             if (savedLocationId != null && selectedLocation != null) {
                 val intent = Intent(activity, ShowMap::class.java).apply {
                     putExtra("locationId", savedLocationId)
@@ -73,7 +68,8 @@ class HomeFragment : Fragment() {
                 }
                 startActivity(intent)
             } else {
-                Toast.makeText(context, "No saved location available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "No location data available", Toast.LENGTH_SHORT).show()
+                Log.e("HomeFragment", "No location data available: savedLocationId=$savedLocationId, selectedLocation=$selectedLocation")
             }
         }
 
@@ -91,6 +87,7 @@ class HomeFragment : Fragment() {
         })
 
         fetchArticlesData()
+        fetchLocationData()
     }
 
     private fun fetchArticlesData() {
@@ -105,10 +102,49 @@ class HomeFragment : Fragment() {
                     }
                 }
                 rvArticlesAdapter.notifyDataSetChanged()
+                Log.d("HomeFragment", "Articles fetched successfully.")
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Failed to load articles", Toast.LENGTH_SHORT).show()
+                Log.e("HomeFragment", "Failed to load articles: ${error.message}")
+            }
+        })
+    }
+
+    private fun fetchLocationData() {
+        locationsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (dataSnapshot in snapshot.children) {
+                        savedLocationId = dataSnapshot.key
+                        val coordinates = dataSnapshot.child("coordinates").getValue(String::class.java)
+                        if (coordinates != null) {
+                            val parts = coordinates.split(",")
+                            if (parts.size == 2) {
+                                try {
+                                    val lat = parts[0].toDouble()
+                                    val lng = parts[1].toDouble()
+                                    selectedLocation = LatLng.newBuilder().setLatitude(lat).setLongitude(lng).build()
+                                    Log.d("HomeFragment", "Location fetched: ${selectedLocation.toString()}")
+                                } catch (e: NumberFormatException) {
+                                    Log.e("HomeFragment", "Error parsing coordinates", e)
+                                }
+                            } else {
+                                Log.e("HomeFragment", "Invalid coordinates format")
+                            }
+                        } else {
+                            Log.e("HomeFragment", "Coordinates not found")
+                        }
+                        break
+                    }
+                } else {
+                    Log.d("HomeFragment", "No location data found.")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeFragment", "Failed to load location data: ${error.message}")
             }
         })
     }
@@ -120,5 +156,6 @@ class HomeFragment : Fragment() {
                     (it.description?.contains(query, true) ?: false)
         }
         rvArticlesAdapter.updateList(ArrayList(filteredList))
+        Log.d("HomeFragment", "Search results updated.")
     }
 }
