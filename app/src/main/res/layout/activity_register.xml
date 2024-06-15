@@ -92,7 +92,7 @@
             android:layout_centerVertical="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="10dp"
-            android:src="@drawable/ic_eye_off_line"/>
+            android:src="@drawable/ic_eye_line"/>
     </RelativeLayout>
 
     <Button

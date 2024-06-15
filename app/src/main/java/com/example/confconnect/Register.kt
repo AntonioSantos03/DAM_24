@@ -92,10 +92,10 @@ class Register : AppCompatActivity() {
             isPasswordVisible = !isPasswordVisible
             if (isPasswordVisible) {
                 binding.password.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                binding.togglePasswordVisibility.setImageResource(R.drawable.ic_eye_line) // eye open
+                binding.togglePasswordVisibility.setImageResource(R.drawable.ic_eye_off_line) // eye close
             } else {
                 binding.password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                binding.togglePasswordVisibility.setImageResource(R.drawable.ic_eye_off_line) // eye close
+                binding.togglePasswordVisibility.setImageResource(R.drawable.ic_eye_line) // eye open
             }
             binding.password.text?.let { it1 -> binding.password.setSelection(it1.length) }  // Move cursor to the end
         }
