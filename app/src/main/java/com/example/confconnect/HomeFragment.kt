@@ -1,6 +1,5 @@
 package com.example.confconnect
 
-import com.example.confconnect.adapters.RvArticlesAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,20 +10,26 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.confconnect.ArticleDetails
-import com.example.confconnect.Articles
-import com.example.confconnect.ShowMap
+import com.example.confconnect.adapters.RvArticlesAdapter
 import com.example.confconnect.databinding.FragmentHomeBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.type.LatLng
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var articlesList: ArrayList<Articles>
     private lateinit var rvArticlesAdapter: RvArticlesAdapter
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var locationsRef: DatabaseReference
+
+    private var savedLocationId: String? = null
+    private var selectedLocation: LatLng? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +44,9 @@ class HomeFragment : Fragment() {
 
         articlesList = ArrayList()
         rvArticlesAdapter = RvArticlesAdapter(articlesList)
+
+        database = FirebaseDatabase.getInstance()
+        locationsRef = database.reference.child("locations")
 
         binding.rvArticles.layoutManager = LinearLayoutManager(context)
         binding.rvArticles.adapter = rvArticlesAdapter
@@ -57,8 +65,16 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnOpenMapActivity.setOnClickListener {
-            val intent = Intent(activity, ShowMap::class.java)
-            startActivity(intent)
+            // Check if location data is available
+            if (savedLocationId != null && selectedLocation != null) {
+                val intent = Intent(activity, ShowMap::class.java).apply {
+                    putExtra("locationId", savedLocationId)
+                    putExtra("coordinates", "${selectedLocation!!.latitude},${selectedLocation!!.longitude}")
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(context, "No saved location available", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Set up search view
@@ -82,18 +98,13 @@ class HomeFragment : Fragment() {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 articlesList.clear()
-                Log.d("HomeFragment", "Snapshot count: ${snapshot.childrenCount}")
                 for (dataSnapshot in snapshot.children) {
                     val article = dataSnapshot.getValue(Articles::class.java)
-                    if (article != null) {
-                        articlesList.add(article)
-                        Log.d("HomeFragment", "Article added: ${article.title}")
-                    } else {
-                        Log.d("HomeFragment", "Article is null for snapshot: ${dataSnapshot.key}")
+                    article?.let {
+                        articlesList.add(it)
                     }
                 }
                 rvArticlesAdapter.notifyDataSetChanged()
-                Log.d("HomeFragment", "Total articles: ${articlesList.size}")
             }
 
             override fun onCancelled(error: DatabaseError) {

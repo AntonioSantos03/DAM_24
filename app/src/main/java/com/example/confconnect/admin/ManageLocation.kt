@@ -1,125 +1,147 @@
 package com.example.confconnect.admin
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.confconnect.Location
 import com.example.confconnect.R
+import com.example.confconnect.ShowMap
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
 
-class ManageLocation : AppCompatActivity() {
+class ManageLocation : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var editTextLocationName: EditText
-    private lateinit var editTextLocationAddress: EditText
+    private lateinit var mMap: GoogleMap
     private lateinit var btnSaveLocation: Button
     private lateinit var btnPreviewLocation: Button
+    private lateinit var btnBack: FloatingActionButton
 
     private lateinit var database: FirebaseDatabase
     private lateinit var locationsRef: DatabaseReference
-    private lateinit var locationListener: ValueEventListener
     private var savedLocationId: String? = null
+
+    private var selectedLocation: LatLng? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_location)
 
-        // Initialize Firebase
         database = FirebaseDatabase.getInstance()
         locationsRef = database.reference.child("locations")
 
-        // Initialize views
-        editTextLocationName = findViewById(R.id.editTextLocationName)
-        editTextLocationAddress = findViewById(R.id.editTextLocationAddress)
         btnSaveLocation = findViewById(R.id.btnSaveLocation)
         btnPreviewLocation = findViewById(R.id.btnPreviewLocation)
+        btnBack = findViewById(R.id.btnBack)
 
-        // Retrieve last saved location if any
-        retrieveLastSavedLocation()
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
-        //back btn
-        val backBtn = findViewById<Button>(R.id.btnBack)
-        backBtn.setOnClickListener {
+        btnBack.setOnClickListener {
             finish()
         }
 
-        // Save location button click listener
-        btnSaveLocation.setOnClickListener { saveLocation() }
-
-        // Optional: Preview location button click listener
-        btnPreviewLocation.setOnClickListener {
-            // Implement preview location functionality if needed
-            Toast.makeText(this, "Preview Location button clicked", Toast.LENGTH_SHORT).show()
+        btnSaveLocation.setOnClickListener {
+            saveLocation()
         }
 
+        btnPreviewLocation.setOnClickListener {
+            val intent = Intent(this, ShowMap::class.java)
+            intent.putExtra("locationId", savedLocationId)
+            intent.putExtra("coordinates", selectedLocation?.latitude.toString() + "," + selectedLocation?.longitude)
+
+            startActivity(intent)
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Remove ValueEventListener when activity is destroyed to prevent memory leaks
-        locationsRef.removeEventListener(locationListener)
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        // Set a click listener for the map
+        mMap.setOnMapClickListener { latLng ->
+            // Clear previous markers
+            mMap.clear()
+
+            // Place a marker at the clicked location
+            mMap.addMarker(MarkerOptions().position(latLng).title("Selected Location"))
+
+            // Save the selected location
+            selectedLocation = latLng
+        }
+
+        // Load previously saved location if exists
+        loadSavedLocation()
     }
 
-    private fun retrieveLastSavedLocation() {
-        // Query to get the last saved location
-        val query = locationsRef.orderByKey().limitToLast(1)
-        locationListener = object : ValueEventListener {
+    private fun loadSavedLocation() {
+        locationsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (data in snapshot.children) {
                     val location = data.getValue(Location::class.java)
                     location?.let {
                         savedLocationId = data.key
-                        editTextLocationAddress.hint = it.coordinates ?: ""
-                        editTextLocationName.hint = it.name ?: ""
+                        val coordinatesStr = it.coordinates
+                        if (coordinatesStr != null && coordinatesStr.isNotBlank()) {
+                            val coordinates = coordinatesStr.split(",")
+                            if (coordinates.size == 2) {
+                                try {
+                                    val lat = coordinates[0].toDouble()
+                                    val lng = coordinates[1].toDouble()
+                                    val locationLatLng = LatLng(lat, lng)
+                                    mMap.addMarker(MarkerOptions().position(locationLatLng).title(it.name))
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 13f))
+                                } catch (e: NumberFormatException) {
+                                    Toast.makeText(this@ManageLocation, "Error parsing coordinates", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                Toast.makeText(this@ManageLocation, "Invalid coordinates format", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(this@ManageLocation, "Coordinates not found", Toast.LENGTH_SHORT).show()
+                        }
                     }
+                    // Only load the first location found
+                    break
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle database error
-                Toast.makeText(this@ManageLocation, "Failed to retrieve last saved location", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ManageLocation, "Failed to retrieve saved location", Toast.LENGTH_SHORT).show()
             }
-        }
-        query.addValueEventListener(locationListener)
+        })
     }
 
     private fun saveLocation() {
-        val locationName = editTextLocationName.text.toString().trim()
-        val locationCoordinates = editTextLocationAddress.text.toString().trim()
-
-        // Validate input
-        if (locationName.isEmpty() || locationCoordinates.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+        if (selectedLocation == null) {
+            Toast.makeText(this, "Please select a location on the map", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Check if a location is already saved
-        if (savedLocationId != null) {
-            // Update existing location
-            val location = Location(savedLocationId, locationCoordinates, locationName)
-            locationsRef.child(savedLocationId!!).setValue(location)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Location updated successfully", Toast.LENGTH_SHORT).show()
-                    finish() // Optionally finish activity after saving
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Failed to update location: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
-        } else {
-            // Create new location
-            val locationId = locationsRef.push().key // Generate unique key for location
-            val location = Location(locationId, locationCoordinates, locationName)
-            locationId?.let {
-                locationsRef.child(it).setValue(location)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "Location saved successfully", Toast.LENGTH_SHORT).show()
-                        finish() // Optionally finish activity after saving
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Failed to save location: ${it.message}", Toast.LENGTH_SHORT).show()
-                    }
+        val locationName = "Saved Location"
+        val locationCoordinates = "${selectedLocation!!.latitude},${selectedLocation!!.longitude}"
+        Log.e("ManageLocation", "Location coordinates: $locationCoordinates")
+
+        val locationId = savedLocationId ?: locationsRef.push().key ?: return
+        val location = Location(locationId, locationCoordinates, locationName)
+
+        locationsRef.child(locationId).setValue(location)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Location saved successfully", Toast.LENGTH_SHORT).show()
+                savedLocationId = locationId
+                mMap.clear()
+                mMap.addMarker(MarkerOptions().position(selectedLocation!!).title(locationName))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation!!, 16f))
             }
-        }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to save location: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }

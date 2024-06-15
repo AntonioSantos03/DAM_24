@@ -16,13 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
-        <activity
-            android:name=".ProfileSettings"
-            android:exported="false" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBdyAKNp4kCtFmbIWLp9_FmoCkfv87jHDk" />
+            android:value="AIzaSyAvQ9Q4hLowHj_LcIuAQKkoJp-rYgLlhrI" />
 
         <activity
             android:name=".ShowMap"
