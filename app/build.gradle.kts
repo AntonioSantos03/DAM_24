@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.gms.google.services)
     implementation(libs.firebase.firestore)
     implementation(libs.play.services.maps)
+    implementation("com.itextpdf:itext7-core:7.2.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

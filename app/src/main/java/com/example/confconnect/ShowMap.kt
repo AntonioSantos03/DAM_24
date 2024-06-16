@@ -67,7 +67,7 @@ class ShowMap : AppCompatActivity(), OnMapReadyCallback {
                                 val locationLatLng = LatLng(lat, lng)
                                 mMap.clear() // Clear existing markers
                                 mMap.addMarker(MarkerOptions().position(locationLatLng).title("Location"))
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 15f))
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 14f))
                             } catch (e: NumberFormatException) {
                                 Log.e(TAG, "Error parsing coordinates: ${e.message}")
                                 Toast.makeText(this@ShowMap, "Error parsing coordinates", Toast.LENGTH_SHORT).show()

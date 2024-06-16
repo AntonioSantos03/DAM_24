@@ -60,6 +60,11 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.btnAdminChat.setOnClickListener {
+            val intent = Intent(activity, CommunityChat::class.java)
+            startActivity(intent)
+        }
+
         binding.btnOpenMapActivity.setOnClickListener {
             if (savedLocationId != null && selectedLocation != null) {
                 val intent = Intent(activity, ShowMap::class.java).apply {

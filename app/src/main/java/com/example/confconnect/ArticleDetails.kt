@@ -1,13 +1,22 @@
 package com.example.confconnect
 
+import android.content.Intent
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.confconnect.adapter.CommentAdapter
 import com.example.confconnect.databinding.ActivityArticleDetailsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.itextpdf.kernel.font.PdfFontFactory
+import com.itextpdf.kernel.pdf.PdfWriter
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas
+import com.itextpdf.layout.Document
+import com.itextpdf.layout.element.Paragraph
+import java.io.File
 
 class ArticleDetails : AppCompatActivity() {
 
@@ -52,6 +61,11 @@ class ArticleDetails : AppCompatActivity() {
             handleSubmitComment()
         }
 
+        /* Set up click listener for Download button
+        binding.btnDownload.setOnClickListener {
+            generatePdf()
+        } */
+
         // Set up click listener for Back button
         binding.btnBack.setOnClickListener {
             finish()
@@ -89,7 +103,7 @@ class ArticleDetails : AppCompatActivity() {
                         // Save comment to Realtime Database
                         commentsRef.child(commentId).setValue(comment)
                             .addOnSuccessListener {
-                                Toast.makeText(this@ArticleDetails, "Comment added successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ArticleDetails, "Your comment has been submitted for review", Toast.LENGTH_SHORT).show()
                                 binding.etComment.text.clear()
                                 loadComments() // Reload comments after adding new comment
                             }
@@ -134,9 +148,37 @@ class ArticleDetails : AppCompatActivity() {
         }
     }
 
+    /*
+    private fun generatePdf() {
+        val pdfFileName = "Article_${articleId}.pdf"
+        val pdfFilePath = File(getExternalFilesDir(null), pdfFileName)
+        val writer = PdfWriter(pdfFilePath)
+        val pdf = com.itextpdf.kernel.pdf.PdfDocument(writer)
+        val document = Document(pdf)
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Clean up listeners or resources if needed
-    }
+        // Write article details to PDF
+        val title = binding.tvTitle.text.toString()
+        val author = binding.tvAuthor.text.toString()
+        val date = binding.tvDate.text.toString()
+        val description = binding.tvDescription.text.toString()
+        val room = binding.tvRoom.text.toString()
+        val time = binding.tvTime.text.toString()
+
+        val content = "Title: $title\nAuthor: $author\nDate: $date\nDescription: $description\nRoom: $room\nTime: $time"
+
+        // Add content to PDF document
+        document.add(Paragraph(content))
+
+        document.close()
+
+        Toast.makeText(this, "PDF Generated: $pdfFileName", Toast.LENGTH_SHORT).show()
+
+        // Open generated PDF file using Intent
+        val pdfFileUri = FileProvider.getUriForFile(this, "com.example.confconnect.file", pdfFilePath)
+        val pdfIntent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(pdfFileUri, "application/pdf")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivity(pdfIntent)
+    } */
 }

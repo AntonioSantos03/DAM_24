@@ -18,6 +18,7 @@ googleServicesVersion = "4.4.2"
 firebaseFirestore = "25.0.0"
 playServicesMaps = "18.2.0"
 googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
+roomCompilerProcessingTesting = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,6 +37,7 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 gms-google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServicesVersion" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+androidx-room-compiler-processing-testing = { group = "androidx.room", name = "room-compiler-processing-testing", version.ref = "roomCompilerProcessingTesting" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -39,14 +39,6 @@
 
     </LinearLayout>
 
-    <!-- EditTexts for Location Name and Address -->
-    <EditText
-        android:id="@+id/editTextLocationName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Location Name"
-        android:inputType="text" />
-
     <!-- Button for Save Location -->
     <LinearLayout
         android:layout_width="match_parent"
