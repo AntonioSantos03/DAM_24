@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.confconnect.adapter.ChatAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -14,7 +15,7 @@ class CommunityChat : AppCompatActivity() {
 
     private lateinit var editTextMessage: EditText
     private lateinit var buttonSend: Button
-    private lateinit var buttonBack: Button
+    private lateinit var buttonBack: FloatingActionButton
     private lateinit var recyclerViewChat: RecyclerView
 
     private lateinit var database: DatabaseReference
@@ -31,9 +32,8 @@ class CommunityChat : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         auth = FirebaseAuth.getInstance()
 
-        buttonBack = findViewById(R.id.btnBack)
-
         // Initialize views
+        buttonBack = findViewById(R.id.btnBack)
         editTextMessage = findViewById(R.id.edit_text_message)
         buttonSend = findViewById(R.id.button_send)
         recyclerViewChat = findViewById(R.id.recycler_view_chat)
@@ -113,7 +113,4 @@ class CommunityChat : AppCompatActivity() {
             }
         }
     }
-
-
 }
-

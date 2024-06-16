@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.btnAdminChat.setOnClickListener {
+        binding.btnCommunityChat.setOnClickListener {
             val intent = Intent(activity, CommunityChat::class.java)
             startActivity(intent)
         }
