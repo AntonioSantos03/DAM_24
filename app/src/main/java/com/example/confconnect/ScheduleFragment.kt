@@ -25,6 +25,9 @@ class ScheduleFragment : Fragment() {
     private lateinit var articlesList: ArrayList<Articles>
     private lateinit var articlesAdapter: ScheduleArticlesAdapter
 
+    private var selectedRoom: String = "All Rooms"
+    private var selectedDate: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +52,8 @@ class ScheduleFragment : Fragment() {
 
         binding.roomFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                filterArticlesByRoom(roomOptions[position])
+                selectedRoom = roomOptions[position]
+                filterArticles()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -89,7 +93,7 @@ class ScheduleFragment : Fragment() {
                     }
                 }
                 articlesList.sortWith(compareBy({ parseDateTime(it.date, it.time) }, { parseDateTime(it.date, it.time) }))
-                articlesAdapter.updateList(articlesList)
+                filterArticles()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -107,15 +111,6 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private fun filterArticlesByRoom(room: String) {
-        val filteredList = if (room == "All Rooms") {
-            articlesList
-        } else {
-            articlesList.filter { it.room == room }
-        }
-        articlesAdapter.updateList(ArrayList(filteredList))
-    }
-
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -123,15 +118,18 @@ class ScheduleFragment : Fragment() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-            val selectedDate = "${String.format("%02d", selectedDay)}-${String.format("%02d", selectedMonth + 1)}-$selectedYear"
-            filterArticlesByDate(selectedDate)
+            selectedDate = "${String.format("%02d", selectedDay)}-${String.format("%02d", selectedMonth + 1)}-$selectedYear"
+            filterArticles()
         }, year, month, day)
 
         datePickerDialog.show()
     }
 
-    private fun filterArticlesByDate(date: String) {
-        val filteredList = articlesList.filter { it.date == date }
+    private fun filterArticles() {
+        val filteredList = articlesList.filter { article ->
+            (selectedRoom == "All Rooms" || article.room == selectedRoom) &&
+                    (selectedDate == null || article.date == selectedDate)
+        }
         articlesAdapter.updateList(ArrayList(filteredList))
     }
 }
