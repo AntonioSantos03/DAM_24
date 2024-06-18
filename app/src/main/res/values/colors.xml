@@ -7,5 +7,12 @@
     <color name="lightgray">#7E7E7E</color>
     <color name="red">#FF0000</color>
     <color name="transparent_black">#80000000</color>
+    <color name="yellow">#f4d35e</color>
+    <color name="orange">#ee964b</color>
+    <color name="red2">#f95738</color>
+    <color name="pink">#efa8b8</color>
+    <color name="lightblue">#5398be</color>
+    <color name="green">#87ba6b</color>
+    <color name="softpurple">#8d6a9f</color>
 
 </resources>

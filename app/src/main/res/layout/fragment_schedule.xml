@@ -6,18 +6,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/white"
     tools:context=".ScheduleFragment">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/frame_container"/>
-
     <TextView
+        android:id="@+id/upcoming_events"
         android:text="@string/upcoming_events"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -36,17 +29,58 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"/>
 
+    <Spinner
+        android:id="@+id/room_filter_spinner"
+        android:layout_width="164dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_background"
+        app:layout_constraintBottom_toTopOf="@id/rvSchedule"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upcoming_events" />
+
+    <Button
+        android:id="@+id/datePickerButton"
+        android:layout_width="164dp"
+        android:layout_height="36dp"
+        android:text="Select Date"
+        android:paddingBottom="6dp"
+        android:background="@drawable/date_picker_background"
+        app:layout_constraintBottom_toTopOf="@id/rvSchedule"
+        app:layout_constraintEnd_toStartOf="@+id/room_filter_spinner"
+        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upcoming_events"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSchedule"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/room_filter_spinner" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_navigation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_menu"
         android:background="@color/purple"
+        app:itemActiveIndicatorStyle="@style/App.custom.Indicator"
+        app:itemIconSize="30dp"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:itemIconSize="30dp"
-        app:itemActiveIndicatorStyle="@style/App.custom.Indicator" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
