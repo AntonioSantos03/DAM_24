@@ -19,7 +19,6 @@ class AdminPage : AppCompatActivity() {
 
         // Find views by their appropriate types
         val manageArticlesBtn = findViewById<Button>(R.id.btnManageArticles)
-        val manageScheduleBtn = findViewById<Button>(R.id.btnManageSchedule)
         val manageProfilesBtn = findViewById<Button>(R.id.btnManageProfiles)
         val manageCommentsBtn = findViewById<Button>(R.id.btnManageComments)
         val manageLocationBtn = findViewById<Button>(R.id.btnManageLocation)
@@ -37,10 +36,6 @@ class AdminPage : AppCompatActivity() {
 
         manageArticlesBtn.setOnClickListener {
             startActivity(Intent(this, ManageArticles::class.java))
-        }
-
-        manageScheduleBtn.setOnClickListener {
-            startActivity(Intent(this, ManageSchedule::class.java))
         }
 
         manageProfilesBtn.setOnClickListener {
